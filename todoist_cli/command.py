@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys, os
+sys.path.append(os.path.dirname(os.path.join(os.getcwd(), os.pardir)))
+from todoist_cli.client import Client
 import click
 from datetime import datetime
 
@@ -22,7 +25,8 @@ def schedule(date):
     else:
         date = datetime.today().strftime("%Y%m%d")
 
-    click.echo(date)
+    client = Client('schedule', {'date': date})
+    client.run()
 
 def main():
     command()

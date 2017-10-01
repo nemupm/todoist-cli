@@ -11,15 +11,28 @@ Installation
     $ pip uninstall todoist-cli # if already installed
     $ pip install dist/todoist-cli-0.0.1.tar.gz
 
-
-Usage
+Setting
 ---------------
 ::
 
-    $ todoist-cli
-    Hello, World!
-    $ todoist-cli --help
-    Usage: todoist-cli [OPTIONS]
+    $ cat $HOME/.todoist_cli/config.ini
+    [todoist]
+    token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+    [calendar]
+    key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Usage
+---------------
+
+schedule
+""""""""""
+::
+
+    $ todoist-cli schedule --help
+    Usage: todoist-cli schedule [OPTIONS]
 
     Options:
-      --help  Show this message and exit.
+      --date TEXT  Specify date as format YYYYMMDD
+      --help       Show this message and exit.
+
