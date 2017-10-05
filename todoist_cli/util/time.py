@@ -16,12 +16,14 @@ class Time(object):
             '20000101 ' + Config().settings['day_start'],
             '%Y%m%d %H:%M'
         )
-        today = datetime.now() - timedelta(hours=day_start.hour) - timedelta(minutes=day_start.minute)
+        # today = datetime.now() - timedelta(hours=day_start.hour) - timedelta(minutes=day_start.minute)
+        today = datetime.now()
         today_start = datetime.strptime(
             today.strftime('%Y%m%d ') + Config().settings['day_start'],
             '%Y%m%d %H:%M'
         )
         self.today_start = self.local_timezone.localize(today_start)
+        # self.today_end = self.today_start + timedelta(days=1)
         self.today_end = self.today_start + timedelta(days=1)
 
     def __new__(cls):

@@ -13,9 +13,11 @@ class Schedule(Plugin):
     def run(self):
         # TODO: get todoist items and register them in the calendar
         for item in self.todoist.all_today_items:
-            # print(item)
-            print(item['content'])
+            print(item)
+            # print(item['content'])
         pass
+
+        # for
 
 # FIXME: (What is the best way to get instance?)
 def plugin_instance(options):
