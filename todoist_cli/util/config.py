@@ -24,12 +24,19 @@ class Config(object):
 
     @property
     def todoist(self):
-        return {'token': self.config.get('todoist', 'token')}
+        return {
+            'token': self.config.get('todoist', 'token')
+        }
 
     @property
     def calendar(self):
-        return {'key': self.config.get('calendar', 'key')}
+        return {
+            'key': self.config.get('calendar', 'key')
+        }
 
     @property
     def settings(self):
-        return {'day_start': self.config.get('settings', 'day_start')}
+        return {
+            'day_start': self.config.get('settings', 'day_start', fallback="09:30"),
+            'default_duration_minutes': self.config.get('settings', 'default_duration_minutes', fallback=60)
+        }
