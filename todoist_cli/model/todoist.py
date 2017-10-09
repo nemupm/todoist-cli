@@ -54,10 +54,17 @@ class Todoist(Model):
             all_completed_items_dict[item['id']] = item
 
         for item in all_items:
+            # TODO: enable checked item
+            if item['checked']:
+                continue
+
             if not item['due_date_utc']:
                 continue
 
-            due = datetime.strptime(item['due_date_utc'], '%a %d %b %Y %H:%M:%S +0000')
+            try:
+                due = datetime.strptime(item['due_date_utc'], Item.TIME_FORMAT_DEFAULT)
+            except:
+                due = datetime.strptime(item['due_date_utc'], Item.TIME_FORMAT_API)
 
             if not Time().is_today(due):
                 continue
@@ -75,6 +82,9 @@ class Item(Model):
     @property checked: whether completed or not
     @property completed_date: (if checked is true) the date when the task completed
     """
+
+    TIME_FORMAT_DEFAULT = "%a %d %b %Y %H:%M:%S +0000"
+    TIME_FORMAT_API = "%Y-%m-%dT%H:%M"
 
     def __init__(self, item):
         super(Item, self).__init__()
@@ -122,6 +132,15 @@ class Item(Model):
     @due_date_utc.setter
     def due_date_utc(self, values):
         self.__due_date_utc = values
+
+    @property
+    def due_date_utc_datetime(self):
+        try:
+            due = datetime.strptime(self.__due_date_utc, Item.TIME_FORMAT_DEFAULT)
+        except:
+            due = datetime.strptime(self.__due_date_utc, Item.TIME_FORMAT_API)
+
+        return Time().set_timezone(due, set_utc=True)
 
     @property
     def duration(self):
@@ -172,10 +191,8 @@ class Item(Model):
         Todoist().api.commit()
 
     def set_due_date(self, due_date):
-        FORMAT = "%Y-%m-%dT%H:%M"
-
         due_date_utc = Time().set_timezone(due_date, set_utc=True)
-        due_date_utc_str = datetime.strftime(due_date_utc, FORMAT)
+        due_date_utc_str = datetime.strftime(due_date_utc, self.TIME_FORMAT_API)
 
         self.__item.update(due_date_utc=due_date_utc_str)
         self.due_date_utc = due_date_utc_str

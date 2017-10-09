@@ -12,7 +12,7 @@ def command():
     pass
 
 @command.command()
-@click.option('--date', help='Specify date as format YYYYMMDD')
+@click.option('--date', help='(not implemented) Specify date as format YYYYMMDD')
 @click.option('--now', is_flag=True, help='use the current time as day start time')
 def schedule(date, now):
     def validate(date_text):
