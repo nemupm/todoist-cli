@@ -4,8 +4,8 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.join(os.getcwd(), os.pardir)))
 from todoist_cli.client import Client
-import click
 from datetime import datetime
+import click
 
 @click.group()
 def command():
@@ -26,6 +26,11 @@ def schedule(date):
         date = datetime.today().strftime("%Y%m%d")
 
     client = Client('schedule', {'date': date})
+    client.run()
+
+@command.command()
+def reset():
+    client = Client('reset', {})
     client.run()
 
 def main():
