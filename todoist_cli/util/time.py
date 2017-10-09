@@ -70,7 +70,7 @@ class Time(object):
 
         Naive time is recognized as UTC and if set_utc is False it is converted to the time with local timezone.
         """
-        if not (target_time.tzinfo and target_time.tzinfo.utcoffset(target_time)):
+        if target_time.tzinfo is None or target_time.tzinfo.utcoffset(target_time) is None:
             target_time = utc.localize(target_time)
 
         return target_time.astimezone(utc if set_utc else self.local_timezone)
