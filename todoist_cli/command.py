@@ -13,7 +13,8 @@ def command():
 
 @command.command()
 @click.option('--date', help='Specify date as format YYYYMMDD')
-def schedule(date):
+@click.option('--now', is_flag=True, help='use the current time as day start time')
+def schedule(date, now):
     def validate(date_text):
         try:
             datetime.strptime(date_text, "%Y%m%d")
@@ -25,7 +26,10 @@ def schedule(date):
     else:
         date = datetime.today().strftime("%Y%m%d")
 
-    client = Client('schedule', {'date': date})
+    client = Client('schedule', {
+        'date': date,
+        'now': True if now else False
+    })
     client.run()
 
 @command.command()

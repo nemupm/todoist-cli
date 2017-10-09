@@ -14,7 +14,11 @@ class Schedule(Plugin):
 
     def run(self):
         # TODO: get todoist items and register them in the calendar
-        start_time = Time().today_start
+        if self.options['now']:
+            start_time = Time().now
+        else:
+            start_time = Time().today_start
+
         for item in sorted(self.todoist.all_today_items, key=lambda x:x.day_order):
             start_time = self.set_due_date(item, start_time)
 

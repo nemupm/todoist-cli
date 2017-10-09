@@ -39,13 +39,13 @@ class Time(object):
         # )
         # today = datetime.now() - timedelta(hours=day_start.hour) - timedelta(minutes=day_start.minute)
 
-        today = datetime.now()
+        now = datetime.now()
         today_start = datetime.strptime(
-            today.strftime('%Y%m%d ') + Config().settings['day_start'],
+            now.strftime('%Y%m%d ') + Config().settings['day_start'],
             '%Y%m%d %H:%M'
         )
         yesterday_midnight = datetime.strptime(
-            today.strftime('%Y%m%d ') + '00:00',
+            now.strftime('%Y%m%d ') + '00:00',
             '%Y%m%d %H:%M'
         )
 
@@ -53,6 +53,7 @@ class Time(object):
         self.today_midnight = self.yesterday_midnight + timedelta(days=1)
         self.today_start = self.local_timezone.localize(today_start)
         self.today_end = self.today_midnight
+        self.now = self.local_timezone.localize(now)
 
         Time._init = True
 
