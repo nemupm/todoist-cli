@@ -76,6 +76,30 @@ class Todoist(Model):
 
         return today_items
 
+    @property
+    def all_expired_items(self):
+        expired_items = []
+        all_items = self.api.state['items']
+
+        for item in all_items:
+            if item['checked']:
+                continue
+
+            if not item['due_date_utc']:
+                continue
+
+            try:
+                due = datetime.strptime(item['due_date_utc'], Item.TIME_FORMAT_DEFAULT)
+            except:
+                due = datetime.strptime(item['due_date_utc'], Item.TIME_FORMAT_API)
+
+            due = Time().set_timezone(due)
+
+            if due <= Time().yesterday_midnight:
+                expired_items.append(Item(item))
+
+        return expired_items
+
 class Item(Model):
     """
     @property content: task content

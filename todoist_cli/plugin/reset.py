@@ -17,6 +17,9 @@ class Reset(Plugin):
 
             item.reset_due_date()
 
+        for item in self.todoist.all_expired_items:
+            item.reset_due_date()
+
 # FIXME: (What is the best way to get instance?)
 def plugin_instance(options):
     return Reset(options)

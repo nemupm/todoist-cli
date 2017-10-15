@@ -3,6 +3,10 @@ Todoist CLI
 
 Unofficial CLI to automatically schedule today Todoist items.
 
+Requirements
+---------------
+* Python(3.4.6)
+
 Example
 ---------------
 ::
