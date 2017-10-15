@@ -16,7 +16,8 @@ class Todoist(Model):
 
         super(Todoist, self).__init__()
 
-        self.api = TodoistAPI(Config().todoist['token'])
+        # NOTE: cache=None is required to fetch the latest day_order data.
+        self.api = TodoistAPI(Config().todoist['token'], cache=None)
         self.api.sync()
 
         Todoist._init = True
